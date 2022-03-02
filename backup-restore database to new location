@@ -1,0 +1,19 @@
+-- backup-restore database to new location
+
+-- backup a database
+backup database pubs
+  to disk = 'c:\Backups\pubs.bak'
+  with stats = 10
+
+
+-- and restore it to a different name
+-- and a different disk drive/location
+restore database pubs_new -- new database name
+  from disk = 'c:\Backups\pubs.bak'
+  with
+    replace, -- overwrite db - if one exists
+    -- norecovery, -- use if there are more files to recover (leave db in recovery mode)
+    recovery, -- use if no more files to recover (set database ready to use)
+    stats = 10, -- show progress (every 10%)
+  move 'pubs_data' to 'm:\new_location\pubs_new.mdf',
+  move 'pubs_log' to 'l:\new_location\pubs_new.ldf'
