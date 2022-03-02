@@ -1,0 +1,17 @@
+-- get account with type and status
+select [member].[name] as [account],
+case [member].[type]
+when 'C' then 'certificate mapped login'
+when 'G' then 'windows group'
+when 'K' then 'asymmetric key mapped login'
+when 'R' then 'server role'
+when 'S' then 'sql account'
+when 'U' then 'windows account'
+end as [type],
+case
+when [member].[is_disabled] = 1 then 'true'
+else 'false'
+end as [account_disabled]
+from [master].[sys].[server_role_members] as [rol_mem]
+join [master].[sys].[server_principals] as [role] on [rol_mem].[role_principal_id] = [role].[principal_id]
+join [master].[sys].[server_principals] as [member] on [rol_mem].member_principal_id = [member].principal_id
