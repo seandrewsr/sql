@@ -14,14 +14,11 @@ could use sp_msforeachdb but it is not a supported command and could be problema
 populating a temp table with each database name
 and then query permissions for each database and put into a second temp table
 must use a dynamic sql query because each database name is defined as a variable
-and part of the initial query
+and part of the second query
 */
 
   declare @statement nvarchar(2000)
   declare @dbname varchar(50)
-
-  if object_id('#prots') is not null drop table #prots
-  if object_id('#prots_db') is not null drop table #prots_db
 
   drop table if exists #protsb
   drop table if exists #prots_db
