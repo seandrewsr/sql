@@ -1,0 +1,90 @@
+
+-- custom sp_helprotect
+
+/*
+this is my version of sp_helprotect
+sp_helprotect only runs against the currently select database
+and I want to see this info for all databases on the server
+
+could also make the sql server name as a variable if we wanted
+to run this against all databases on a defined list of sql servers
+
+using temp table for this because each database name is defined as a variable
+could use sp_msforeachdb but it is not a supported command and could be problematic
+populating a temp table with each database name
+and then query permissions for each database and put into a second temp table
+must use a dynamic sql query because each database name is defined as a variable
+and part of the initial query
+*/
+
+  declare @statement nvarchar(2000)
+  declare @dbname varchar(50)
+
+  if object_id('#prots') is not null drop table #prots
+  if object_id('#prots_db') is not null drop table #prots_db
+
+  drop table if exists #protsb
+  drop table if exists #prots_db
+
+  -- populate the temp database name table
+  select [name] as [database]
+  into #prots_db
+  from master.sys.databases
+  where [name] not in ('master','msdb','model','tempdb')
+  and [state_desc] = 'online'
+
+  declare @d varchar(50)
+
+      declare csr_database_list insensitive cursor for
+        select [database] from #prots_db
+        open csr_database_list
+          fetch next from csr_database_list into @d
+          while @@fetch_status = 0
+          begin
+
+                select @statement =
+                'select distinct [db_prin].[principal_id],'
+                +'''' + @d + ''' as [database],
+                [db_prin].[name] as [username],
+                [perms].[grantee_principal_id],
+                [perms].[grantor_principal_id],
+                [perms].[permission_name],
+                [perms].[state_desc],
+                [db_prin].[type_desc],
+                [perms].[class_desc]
+                into #prots
+
+                from '+'[' + @d + '].[sys].[database_permissions] as [perms]
+                left join '+'[' + @d + '].[sys].[database_principals] as [db_prin] on [perms].[grantee_principal_id] = [db_prin].[principal_id]
+                left join '+'[' + @d + '].[sys].[database_role_members] as [db_role_mem] on [db_prin].[principal_id] = [db_role_mem].[member_principal_id]'
+                exec sp_executesql @statement -- the  sp_executesql statement to populate prots
+
+            fetch next from csr_database_list into @d
+          end
+      close csr_database_list
+      deallocate csr_database_list
+
+      select
+      [prots].[principal_id],
+      [prots].[server],
+      [prots].[database],
+      [prots].[username],
+      [prots].[grantee_principal_id],
+      [prots].[grantor_principal_id],
+      [prots].[permission_name],
+      [prots].[state_desc],
+      [prots].[type_desc],
+      [prots].[class_desc]
+      from [ag_sql_audit].[dbo].[prots]
+      where not
+      (
+        [prots].[username] like 'ProcessManager%'
+        or [prots].[username] like '%System.%'
+        or [prots].[username] like '%NT AUTHORITY%'
+        or [prots].[username] like '%##%'
+        or [prots].[username] like 'dbo'
+        or [prots].[username] like 'AllSchemaOwner'
+        or [prots].[username] like 'ModuleSigner'
+      )
+      order by [prots].[username] asc
+
