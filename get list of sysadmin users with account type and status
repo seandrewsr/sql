@@ -1,0 +1,19 @@
+-- get list of sysadmin users with account type and status
+select
+[rol_mem].[role_principal_id],
+[role].[name] as [rolename],
+[rol_mem].[member_principal_id],
+[member].[name] as [membername],
+case [member].[type]
+when 'C' then 'certificate mapped login'
+when 'G' then 'windows group'
+when 'K' then 'asymmetric key mapped login'
+when 'R' then 'server role'
+when 'S' then 'sql account'
+when 'U' then 'windows account'
+end as [type],
+[member].[default_database_name],
+[member].[is_disabled]
+from [master].[sys].[server_role_members] as [rol_mem]
+join [master].[sys].[server_principals] as [role] on [rol_mem].[role_principal_id] = [role].[principal_id]
+join [master].[sys].[server_principals] as [member] on [rol_mem].[member_principal_id] = [member].[principal_id]
