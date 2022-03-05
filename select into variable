@@ -1,0 +1,11 @@
+
+declare @p_reccount int
+
+select @p_reccount =
+count(*)
+from [dbserver].[database].[dbo].[table_or_view] as [mbr]
+where [mbr].[field1] = 'some value'
+and [mbr].[field2] = 'some other value'
+
+select @p_reccount as [the_rec_count]
+
