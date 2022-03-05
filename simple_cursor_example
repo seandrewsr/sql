@@ -1,0 +1,20 @@
+-- simple_cursor_example
+
+declare @p_var1 varchar(100)
+
+declare csrPatentMain insensitive cursor for
+  select fields1 from some_sql_table
+
+open _csr
+fetch next from _csr into @p_var1
+while @@fetch_status = 0
+  begin
+
+    -- do somthing here
+    -- your code here
+
+  fetch next from _csr into @p_var1
+  end
+close _csr
+deallocate _csr
+
