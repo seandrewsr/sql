@@ -1,0 +1,15 @@
+
+select
+[mbr].[field1],
+[mbr].[field2],
+[mbr].[field3],
+
+case when [mbr].[field4] = 0
+  then 'set to some text'
+  else 'set to some diffect text'
+end as [status]
+
+from [sqlserver].[database].[dbo].[view_or_table] as [mbr]
+where [mbr].[field1] = 'some value'
+and [mbr].[field2] = 'some value'
+
