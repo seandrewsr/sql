@@ -1,0 +1,11 @@
+-- get a list of interaction engagements (cases/matters)
+use dbname
+select
+[case].[directory_id],
+[case].[directory_src_id],
+[case].[project_id],
+[case].[project_cd] as [casenumber],
+[case].[client_cd],
+[case].[project_nm]
+from [int_aux_project] as [case]
+where [case].[config_id] = 200 -- matter only - do not include leads (100)
