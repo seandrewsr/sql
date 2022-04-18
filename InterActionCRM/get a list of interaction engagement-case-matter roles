@@ -1,0 +1,21 @@
+-- get a list of interaction engagement (case/matter) roles
+-- for a specified engagement number (case/matter)
+use dbname
+select
+[case].[directory_id],
+[case].[directory_src_id],
+[case].[project_id],
+[case].[project_cd] as [casenumber],
+[case].[client_cd],
+[case].[project_nm],
+[case_role].[project_id],
+[case_role].[listing_id],
+[case_role].[proj_role_typ_id],
+[role].[proj_role_typ_id],
+[role].[proj_role_typ_nm]
+from [int_aux_projmember_role] as [case_role]
+left join [int_proj_role_typ] as [role] on [case_role].[proj_role_typ_id] = [role].[proj_role_typ_id]
+left join [int_aux_project] as [case] on [case_role].[project_id] = [case].[project_id]
+where [case].[config_id] = 200 -- matter only - do not include leads (100)
+and [case].[project_cd] = '123456' -- the engagement number (case/matter)
+order by [role].[proj_role_typ_nm]
