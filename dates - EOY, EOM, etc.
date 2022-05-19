@@ -16,7 +16,12 @@ select dateadd(wk, datediff(wk,0, dateadd(dd,6-datepart(day,getdate()),getdate()
 For only the date (no time), stuff it all in a convert with a target type of date
   example: select convert(date, (dateadd(dd, datediff(dd,0,getdate()), 0)+1)) as [tomorrow_date] -- tomorrow
   
-tomorrow_date
-2022-05-20
+  tomorrow_date
+  2022-05-20
 
+To show as month-day-year, stuff it all in a format with 'MM-dd-yyyy'
+  example: select format(convert(date, (dateadd(dd, datediff(dd, 0, getdate()), 0) +1)), 'MM-dd-yyyy') as [tomorrow_date] -- tomorrow
+
+  tomorrow_date
+  05-20-2022
 
