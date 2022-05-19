@@ -13,3 +13,10 @@ select dateadd(ms,-3,dateadd(mm, datediff(m,0,getdate()  )+1, 0)) -- last day of
 select dateadd(ms,-3,dateadd(yy, datediff(yy,0,getdate()  )+1, 0)) -- last day of current year
 select dateadd(wk, datediff(wk,0, dateadd(dd,6-datepart(day,getdate()),getdate())), 0) -- first monday of the month
 
+For only the date (no time), stuff it all in a convert with a target type of date
+  example: select convert(date, (dateadd(dd, datediff(dd,0,getdate()), 0)+1)) as [tomorrow_date] -- tomorrow
+  
+tomorrow_date
+2022-05-20
+
+
