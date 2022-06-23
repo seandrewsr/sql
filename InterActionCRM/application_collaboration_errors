@@ -1,3 +1,10 @@
+/*
+get a count of all application collaboration error messages
+
+get application collaboration error codes and counts
+with error code description from the error code table
+*/
+
 
 use [your_interaction_database]
 
