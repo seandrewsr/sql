@@ -1,0 +1,25 @@
+
+use [your_interaction_database]
+
+-- truncate the [int_dts_transmsg] table
+-- before running the application collaboration process
+-- this will clear out all messages from piror runs
+
+-- get a count of all application
+-- collaboration error messages
+select
+count (*) as [app_collab_error_count]
+from [int_dts_transmsg]
+
+-- get application collaboration error codes
+-- and counts
+-- with error code description from the error code table
+select
+[tmsg].[error_code],
+count([tmsg].[error_code]) as [counts],
+[emsg].[error_desc1]
+from [int_dts_transmsg] as [tmsg]
+left join [int_dts_errormsg] as [emsg] on [tmsg].[error_code] = [emsg].[error_id]
+group by [tmsg].[error_code], [emsg].[error_desc1]
+order by count([tmsg].[error_code]) desc
+
