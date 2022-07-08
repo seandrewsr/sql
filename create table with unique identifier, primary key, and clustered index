@@ -5,13 +5,13 @@
 
   create table [dbo].[the_table_to_create]
   (
-	  [pkid] [uniqueidentifier] not null,
+    [pkid] [uniqueidentifier] not null,
     [int_field] [int] not null,
-	  [varachar_field] [varchar](20) not null,
-	  [bit_field] [bit] not null,
-	  constraint [pk_settings] primary key clustered 
+    [varachar_field] [varchar](20) not null,
+    [bit_field] [bit] not null,
+    constraint [pk_settings] primary key clustered 
     (
-	    [pkid] asc
+      [pkid] asc
     ) with (pad_index = off, statistics_norecompute = off, ignore_dup_key = off, allow_row_locks = on, allow_page_locks = on) on [primary]
   ) on [primary]
 
