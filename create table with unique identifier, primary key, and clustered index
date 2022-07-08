@@ -15,4 +15,9 @@
     ) with (pad_index = off, statistics_norecompute = off, ignore_dup_key = off, allow_row_locks = on, allow_page_locks = on) on [primary]
   ) on [primary]
 
+-- insert records into the new table
+insert into [the_table_to_create] values (newid(), 123, 'ABC', 1)
+insert into [the_table_to_create] values (newid(), 456, 'DEF', 0)
+
+
 
