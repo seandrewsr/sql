@@ -34,10 +34,7 @@ close symmetric key your_symmetrickey_name
 
 
 
-
-
 -- query the encrypted sql column
-
 declare @symkey_guid as uniqueidentifier = key_guid('your_symmetrickey_name')
 if( @symkey_guid is not null)
   begin
@@ -58,8 +55,8 @@ else
 
 
 
--- update an encrypted sql column
 
+-- update an encrypted sql column
 declare @symkey_guid as uniqueidentifier = key_guid('your_symmetrickey_name')
 if( @symkey_guid is not null)
   begin
