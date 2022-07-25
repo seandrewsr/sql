@@ -66,6 +66,7 @@ if( @symkey_guid is not null)
       -- do your your update
       update [your_existing_database].[dbo].[ your_sql_table]
       set [sql_column_name] = EncryptByKey(Key_GUID('your_symmetrickey_name'),'the column value you wish to set')
+      where [sql_column_name] = 'some filter value'
 
     -- must always close the symetric key after running the query
     close symmetric key your_symmetrickey_name
