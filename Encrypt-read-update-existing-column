@@ -1,14 +1,12 @@
 
 -- create the master key w/password
-use [master]
+use [your_existing_database]
 create master key encryption by password = 'your_super_secret_password'
 
 -- create the self-signed certificate
-use [your_existing_database]
 create certificate your_certificate_name with subject = 'your_certificate_name'
 
 -- create database symetric key
-use [your_existing_database]
 create symmetric key your_symmetrickey_name
 with algorithm = aes_128
 encryption by certificate your_certificate_name
@@ -19,13 +17,13 @@ alter database scoped configuration clear procedure_cache;
 -- open the symmetric key
 open symmetric key your_symmetrickey_name decryption by certificate your_certificate_name
 
-  -- encrypt an existing column
-  update [your_sql_table]
-  set [sql_column_name] = encryptbykey(key_guid('your_symmetrickey_name'), [sql_column_name])
+-- encrypt an existing column
+update [your_sql_table]
+set [sql_column_name] = encryptbykey(key_guid('your_symmetrickey_name'), [sql_column_name])
 
-  -- encrypt another existing column
-  update [your_other_sql_table]
-  set [another_sql_column_name] = encryptbykey(key_guid('your_symmetrickey_name'), [another_sql_column_name])
+-- encrypt another existing column
+update [your_other_sql_table]
+set [another_sql_column_name] = encryptbykey(key_guid('your_symmetrickey_name'), [another_sql_column_name])
 
 -- must always close the symetric key
 close symmetric key your_symmetrickey_name
@@ -33,6 +31,7 @@ close symmetric key your_symmetrickey_name
 
 
 -- query the encrypted sql column
+use [your_existing_database]
 declare @symkey_guid as uniqueidentifier = key_guid('your_symmetrickey_name')
 if( @symkey_guid is not null)
   begin
@@ -55,6 +54,7 @@ else
 
 
 -- update an encrypted sql column
+use [your_existing_database]
 declare @symkey_guid as uniqueidentifier = key_guid('your_symmetrickey_name')
 if( @symkey_guid is not null)
   begin
