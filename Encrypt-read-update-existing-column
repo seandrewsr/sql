@@ -1,16 +1,14 @@
 
-use [your_existing_database]
-
 -- create the master key w/password
 use master
 create master key encryption by password = 'your_super_secret_password'
 
 -- create the self-signed certificate
-use your_existing_database
+use [your_existing_database]
 create certificate your_certificate_name with subject = 'your_certificate_name'
 
 -- create database symetric key
-use your_existing_database
+use [your_existing_database]
 create symmetric key your_symmetrickey_name
 with algorithm = aes_128
 encryption by certificate your_certificate_name
