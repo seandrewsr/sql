@@ -1,6 +1,6 @@
 
 -- create the master key w/password
-use master
+use [master]
 create master key encryption by password = 'your_super_secret_password'
 
 -- create the self-signed certificate
