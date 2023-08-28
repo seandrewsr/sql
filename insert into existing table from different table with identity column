@@ -1,0 +1,17 @@
+
+-- insert into existing table from different table
+-- with identity column
+-- you must list out target table columns
+-- and source table columns
+-- to do this with an identity column
+set identity_insert [target_table] on;
+insert into [db_one].[dbo].[target_table] ([f_id], [p_id], [e_id], [status])
+select
+[f_id],
+[p_id],
+[e_id],
+[status]
+from [db_two].[dbo].[source_table_table]
+set identity_insert [target_table] off;
+
+
