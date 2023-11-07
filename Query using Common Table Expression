@@ -1,0 +1,59 @@
+    
+    CTEs offer a logical and legible approach to writing queries that can break the complex queries down to a series
+    of logical steps that help to improve the legibility of your queries, and achieve more complex result sets 
+    
+  
+    declare @p_patid int = 1147;
+
+    with
+    [patient_update_cte]
+    as
+    (
+      select
+      distinct [person].[pat_id],
+      [person].[fname],
+      [person].[lname],
+      rtrim([person].[chart_id]) as [chart_id],
+      case [person].[gender_cd]
+        when 'F' then 'Female'
+        when 'M' then 'Male'
+        else ''
+      end as [gender_cd],
+      format([person].[birth_date], 'MM-dd-yyyy') as [birth_date],
+      [person].[email],
+
+      [addr].[addr_id] as [address_id],
+      [addr].[priority],
+      [addr].[addr_type_cn],
+      [address].[addr1],
+      [address].[addr2],
+      [address].[addr3],
+      [address].[city],
+      [address].[state_cd],
+      iif(len([address].[zip_plus4]) = 0, rtrim([address].[zip]), rtrim([address].[zip])+'-'+[address].[zip_plus4]) as [zip],
+      [address].[country_cd],
+      case when [address].[mailing_yn] = 0
+        then 'N'
+        else 'Y'
+      end as [mailing_yn],
+      [phoneinfo].[phone_id] as [csphone_phone_id],
+      [phoneid].[phone_id] as [cppat_phone_phone_id],
+      [phoneid].[phone_type_cn],
+      rtrim([phoneinfo].[area_code]) as [area_code],
+      rtrim([phoneinfo].[phone_no]) as [phone_no],
+      format((convert(bigint, replace([phoneinfo].[area_code]+[phoneinfo].[phone_no], substring([phoneinfo].[area_code]+[phoneinfo].[phone_no], patindex('%[^0-9]%', [phoneinfo].[area_code]+[phoneinfo].[phone_no]), 1), ''))), '(000) 000-0000') as [fullphone] -- converting to bigint to avoid int column conversion overflow
+
+      from [cph].[dbo].[cppat] as [person] -- primary table
+      left join [cppat_addr] as [addr] on [person].[pat_id] = [addr].[pat_id]
+      left join [cph].[dbo].[csaddr] as [address] on [addr].[addr_id] = [address].[addr_id] -- upon 
+      left join [cph].[dbo].[cppat_phone] as [phoneid] on [person].[pat_id] = [phoneid].[pat_id]
+      left join [cph].[dbo].[csphone] as [phoneinfo] on [phoneid].[phone_id] = [phoneinfo].[phone_id]
+      where [person].[pat_id] = @p_patid
+     )
+
+    select
+    *
+    from [patient_update_cte]
+
+
+
