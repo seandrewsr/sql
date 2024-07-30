@@ -1,0 +1,13 @@
+List linked SQL servers and their logins
+    
+  
+  -- linked servers and their logins
+  select
+  [servers].[name],
+  [prin].[principal_id],
+  [logins].[remote_name]
+  from [sys].[servers] as [servers]
+  join [sys].[linked_logins] as [logins] on [servers].[server_id] = [logins].[server_id]
+  left join [sys].[server_principals]  as [prin] on [logins].[local_principal_id] = [prin].[principal_id]
+  where [servers].[is_linked] = 1
+  
