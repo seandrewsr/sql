@@ -10,4 +10,4 @@
 - [TSQL-Update a column based on the value of a TSQL variable](https://github.com/seandrewsr/code/blob/main/TSQL-Update%20a%20column%20based%20on%20the%20value%20of%20a%20TSQL%20variable.pdf)
 
 
-I will be adding to this repopsitory as time permits.
+I will be adding to this repository as time permits.
