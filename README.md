@@ -8,4 +8,3 @@
 - [IsolationLevelsInSQL](https://github.com/seandrewsr/code/blob/main/IsolationLevelsInSQL.pdf)
 - [SQL_ACID](https://github.com/seandrewsr/code/blob/main/SQL_ACID.pdf)
 - [TSQL-Update a column based on the value of a TSQL variable](https://github.com/seandrewsr/code/blob/main/TSQL-Update%20a%20column%20based%20on%20the%20value%20of%20a%20TSQL%20variable.pdf)
-
