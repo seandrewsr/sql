@@ -1,6 +1,7 @@
 ## SQL
 - [Practical Random SQL Code Examples](https://github.com/seandrewsr/sql/blob/main/PracticalRandomSQLCodeExamples.pdf)
 - [Time Zone-Sensitive Business Engagement Logic for Business Hour Validation](https://github.com/seandrewsr/sql/blob/main/TimeZone-SensitiveEngagementValidation.pdf)
+- [Easily Display Record Counts in SQL Result Set](https://github.com/seandrewsr/sql/blob/main/IncludeRecordCountAlongsideIndividualRowData.pdf)
 - [Using SQL Cross Apply](https://github.com/seandrewsr/sql/blob/main/UsingSQLCrossApply.pdf)
 - [Using SQL Cross Apply With Nested JSON](https://github.com/seandrewsr/sql/blob/main/UsingSQLCrossApplyWithNestedJSON.pdf)
 - [Leveraging SQL JSON Results](https://github.com/seandrewsr/code/blob/main/WorkingWithSQLJSONResults.pdf)
