@@ -1,8 +1,0 @@
--- get database role membership
-select [role].[name] as [databaserole],
-isnull ([member].[name], 'no role members') as [rolemember]
-from [master].[sys].[database_role_members] as [drm]
-right outer join [master].[sys].[database_principals] as [role] on [drm].[role_principal_id] = [role].[principal_id]
-left outer join [master].[sys].[database_principals] as [member] on [drm].[member_principal_id] = [member].[principal_id]
-where [role].[type] = 'r'
-order by [role].[name]
