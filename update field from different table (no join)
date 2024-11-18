@@ -1,9 +1,0 @@
-
--- update field from different table (no join)
-
-update [pubs2].[dbo].[authors]
-set [pubs2].[dbo].[authors].[au_lname] = [pubs].[dbo].[authors].[au_lname]
-from [pubs].[dbo].[authors]
-where [pubs2].[dbo].[authors].[au_id] = [pubs].[dbo].[authors].[au_id]
-
-
