@@ -1,4 +1,5 @@
 ## SQL
+- [SQL Admin Scripts: A Practical Toolkit for Managing Servers and Databases](https://github.com/seandrewsr/sql/blob/main/PracticalAdminSQLCodeExamples.pdf)
 - [Practical Random SQL Code Examples](https://github.com/seandrewsr/sql/blob/main/PracticalRandomSQLCodeExamples.pdf)
 - [Time Zone-Sensitive Business Engagement Logic for Business Hour Validation](https://github.com/seandrewsr/sql/blob/main/TimeZone-SensitiveEngagementValidation.pdf)
 - [Easily Display Record Counts in SQL Result Set](https://github.com/seandrewsr/sql/blob/main/IncludeRecordCountAlongsideIndividualRowData.pdf)
